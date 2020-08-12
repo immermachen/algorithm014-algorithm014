@@ -20,7 +20,7 @@
 	- [26. Remove Duplicates from Sorted Array]: 快慢指针+遍历交换。
 	- [189. Rotate Array]: 首先计算最大公约数+遍历交换。
 	- [66. Plus One]: 遍历。
-	- [21. Merge Two Sorted Lists]: 遍历。
-	- [88. Merge Sorted Array]: 
+	- [21. Merge Two Sorted Lists]: 递归遍历。
+	- [88. Merge Sorted Array]:  
 	
 
