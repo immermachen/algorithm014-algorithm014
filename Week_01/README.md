@@ -22,5 +22,9 @@
 	- <66. Plus One>: 遍历。
 	- <21. Merge Two Sorted Lists>: 递归遍历。
 	- <88. Merge Sorted Array>: 快慢指针+遍历交换
+	- <641. Design Circular Deque>: Method1: 用vector作为存储, 和用它的STL实现相应的方法。Method2: 用linkedList.
+	- <42.trapping-rain-water>: Method1: 左右指针夹逼法+遍历累加每个柱子的积水量；
+			遍历方法：交替遍历左右柱子较小的；
+			积水=当前最大可达水位-当前柱子值。
 	
 
