@@ -17,8 +17,10 @@
 3. 解题思路：
 	- <1.Two Sum>: 
 			- Method: 首先利用hashmap缓存数组pair<data[index], index>， 好处在map查找O(1).
-			然后在遍历中查找 rest=target-data[i], 是否在map中。
-			- complexity: time: O(n), space: O(n)	
+			然后在遍历中查找 rest=target-data[i], 是否在map中。	
+			
+			- complexity: time: O(n), space: O(n)			
+			
 	- <283. Move Zeroes>: 
 			- Method: 快慢指针+遍历交换。
 			慢指针记录下个0位置，快指针记录下个非0位置。
