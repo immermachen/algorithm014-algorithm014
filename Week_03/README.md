@@ -60,6 +60,21 @@
 
 ## 3. 解题思路：
 
+	- <297. Serialize and Deserialize Binary Tree>
+		
+		- Method: preorderDFS + ostringstream out + istringstream in.
+			
+			```
+			ostringstream out;
+			istringstream in;
+			out << root->val << ' '; // ' ' indicates that Stream a number till white-space is encountered. (此处有空格，字符串流是通过空格判断一个字符串的结束)
+			string val;   
+			in >> val;
+			```
+			
+		- complexity: time: O(n), space: O(n).
+
+		
 	- <47. Permutations II>
 	
 		- Method 1:  backtracking. Based on <46. Permutations>. First Sort the input nums!
