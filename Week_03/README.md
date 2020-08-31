@@ -88,8 +88,28 @@
 						
 		- complexity: time: O(n*n!), space: O(n^2)???
 		
-		- Method 2: TODO: backtracking + 交换.		
+
+		- Method 2: backtracking + 交换.		
+			https://leetcode-cn.com/problems/permutations/solution/quan-pai-lie-by-leetcode-solution-2/ 
+			ideal：通过swap和指针start实现下一个level的可用的subvector。
+			Note: 下一个for起始位置是start+1.
+			```			
+			void helper(vector<int>& nums, vector<vector<int>>& res, int start) {
+				if(nums.size()==start) {
+					res.push_back(nums);
+					return;
+				}
+				for(int i=start; i<nums.size(); ++i) {            
+					swap(nums[i], nums[start]);
+					helper(nums, res, start+1);
+					swap(nums[i], nums[start]);
+				}
+			```
 		
+		- complexity: 
+			time: O(n*n!)
+			space: O(n)：其中 n为序列的长度。除答案数组以外，递归函数在递归过程中需要为每一层递归函数分配栈空间， 所以这里需要额外的空间且该空间取决于递归的深度，这里可知递归调用深度为 O(n).
+					
 		
 	- <77. Combinations>
 		
