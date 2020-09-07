@@ -351,15 +351,43 @@ void bfs(Node* root) {
 	```
 
 ## 使用二分查找，寻找一个半有序数组 [4, 5, 6, 7, 0, 1, 2] 中间无序的地方
-	TODO: 每次二分时，查看左右两半部分，无序的则进入下一层，需要带上mid作为下一层边界。（有序条件：左边界小于右边界）。递归直到只有两个元素时，第一个元素就是拐点了。
-	[4, 5, 6, 7, 0, 1, 2] 
+	TODO: 每次二分时，查看左右两半部分，无序的则进入下一层，需要带上mid作为下一层边界。
+	（有序条件：左边界小于右边界）。递归直到只有两个元素去并且是无序时，右边元素就是拐点pivot了。
+	
+	分析过程：
+	
+	奇数：[4, 5, 6, 7, 0, 1, 2] 
 	[4, 5, 6, 7],  [7, 0, 1, 2] -- 左半部份有序，则递归进入右半部份。
 					[7, 0], [0, 1, 2]  -- 右半部份有序，则递归进入左半部份。
-							[7, 0] -- 只有两个元素，则第一个元素7， 就是中间无序的地方。
+							[7, 0] -- 只有两个元素，则右边元素0， 就是中间无序的地方。
 
+	偶数：[2, 4, 5, 6, 0, 1] 
+		[2, 4, 5], [5, 6, 0, 1] 
+					[5, 6, 0, 1] 
+					[5, 6], [6, 0, 1] 
+							[6, 0],[0, 1] 
+								[6, 0] -- 只有两个元素, 则右边元素0， 就是中间无序的地方。
 
+	```
+	//find the index of pivot(=the minimum number).
+    int findPivotIndex (std::vector<int>& nums) {        
+      int l=0, r=nums.size()-1;
+      if(nums[l]<nums[r]) return -1;
+      while(l<r){          
+          if(l+1==r && nums[l]>nums[r]) return r;
+          int mid = (l+r)>>1;
+          if(nums[l]>nums[mid]) {//left unorder
+              r = mid;
+          }else if(nums[mid]>nums[r]) {//right unorder
+              l = mid;
+          }
+      }
+      return 0;
+    }
+	```
 ## 解题思路
 
+- <874. Walking Robot Simulation>: Easy. TODO. 
 
 - <45. Jump Game II>: Hard. TODO. 
 
