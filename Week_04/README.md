@@ -97,7 +97,7 @@ void dfs(Node* root) {
 
     if (visited.count(node->val)) continue;
     visited[node->val] = 1;
-
+	
     for (int i = node->children.size() - 1; i >= 0; --i) {
         stackNode.push(node->children[i]);
     }
@@ -143,6 +143,7 @@ void bfs(Node* root) {
   while (!queueNode.empty()) {
     Node* node = queueNode.top();
     queueNode.pop();
+	
     if (visited.count(node->val)) continue;
     visited[node->val] = 1;
 
@@ -295,7 +296,7 @@ void bfs(Node* root) {
 		int left = 0, right = (int)nums.size()-1;
 		
 		while (left <= right) {
-			int mid = left + (right - left)/ 2;
+			int mid = left + (right - left)/ 2;  //Note: not use mid=(right+left)/2, due to overflow!
 			if (nums[mid] == target) return mid;
 			else if (nums[mid] < target) left = mid + 1;
 			else right = mid - 1;
@@ -351,10 +352,10 @@ void bfs(Node* root) {
 	```
 
 ## 使用二分查找，寻找一个半有序数组 [4, 5, 6, 7, 0, 1, 2] 中间无序的地方
-	TODO: 每次二分时，查看左右两半部分，无序的则进入下一层，需要带上mid作为下一层边界。
-	（有序条件：左边界小于右边界）。递归直到只有两个元素去并且是无序时，右边元素就是拐点pivot了。
 	
-	分析过程：
+	分析过程：same to <153. Find Minimum in Rotated Sorted Array>	
+	每次二分时，查看左右两半部分，无序的则进入下一层，需要带上mid作为下一层边界。
+	（有序条件：左边界小于右边界）。递归直到只有两个元素并且是无序时，右边元素就是拐点pivot了。
 	
 	奇数：[4, 5, 6, 7, 0, 1, 2] 
 	[4, 5, 6, 7],  [7, 0, 1, 2] -- 左半部份有序，则递归进入右半部份。
@@ -371,18 +372,16 @@ void bfs(Node* root) {
 	```
 	//find the index of pivot(=the minimum number).
     int findPivotIndex (std::vector<int>& nums) {        
-      int l=0, r=nums.size()-1;
-      if(nums[l]<nums[r]) return -1;
-      while(l<r){          
-          if(l+1==r && nums[l]>nums[r]) return r;
-          int mid = (l+r)>>1;
-          if(nums[l]>nums[mid]) {//left unorder
-              r = mid;
-          }else if(nums[mid]>nums[r]) {//right unorder
-              l = mid;
-          }
-      }
-      return 0;
+        //if(nums.size()==0), assume nums.size()>0.
+        int L=0, R=nums.size()-1;
+        if(nums[L]<nums[R]) return nums[0];
+        while(L<R) {
+            if(L+1==R) return nums[R];
+            int mid = L+(R-L)/2;
+            if(nums[L]<nums[mid]) L=mid;
+            else R=mid;
+        }
+        return nums[0];
     }
 	```
 ## 解题思路
@@ -405,7 +404,7 @@ void bfs(Node* root) {
 
 - <455. Assign Cookies>: Easy.
 	
-	- Method: 贪心算法(greedy algorithm). 
+	- Method: 贪心算法(greedy algorithm). 	
 	- complexity:
     	- time: O(N).
     	- space: O(1). 
