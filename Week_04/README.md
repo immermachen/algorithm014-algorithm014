@@ -371,7 +371,7 @@ void bfs(Node* root) {
 
 	```
 	//find the index of pivot(=the minimum number).
-    int findPivotIndex (std::vector<int>& nums) {        
+    int findPivot (std::vector<int>& nums) {        
         //if(nums.size()==0), assume nums.size()>0.
         int L=0, R=nums.size()-1;
         if(nums[L]<nums[R]) return nums[0];
@@ -432,18 +432,28 @@ void bfs(Node* root) {
 
 - <153. Find Minimum in Rotated Sorted Array>
 
-	- Method: DFS+binarySearch.
+	- Method1: DFS+binarySearch.
 	- complexity:
     	- time: O(logN). 
-    	- space: O(logN). 用于递归栈。TODO: 可以改进到O(1), 用while代替递归。
+    	- space: O(logN). 用于递归栈。
+		
+	- Method2: binarySearch.
+	- complexity:
+    	- time: O(logN). 
+    	- space: O(1). 改进到O(1), 用while代替递归。
 
 - <33. Search in Rotated Sorted Array>
 
 	- Method: DFS+binarySearch.
 	- complexity:
     	- time: O(logN). 
-    	- space: O(logN). 用于递归栈。TODO: 可以改进到O(1), 用while代替递归。
+    	- space: O(logN). 用于递归栈。
 
+	- Method2: binarySearch.
+	- complexity:
+    	- time: O(logN). 
+    	- space: O(1). 改进到O(1), 用while代替递归。
+		
 - <126. Word Ladder II> 
 
 	- Method: BFS. 
@@ -491,7 +501,7 @@ void bfs(Node* root) {
 		
 	- Method: TODO: BFS. https://leetcode-cn.com/problems/number-of-islands/solution/dao-yu-shu-liang-by-leetcode/ 
 	- complexity:
-    	- time: O(MN)，其中 MMM 和 NNN 分别为行数和列数。
+    	- time: O(MN)，其中 M 和 N 分别为行数和列数。
     	- space: O(min(M,N))，在最坏情况下，整个网格均为陆地，队列的大小可以达到 min⁡(M,N)。
 
 - <515. Find Largest Value in Each Tree Row>
@@ -516,7 +526,7 @@ void bfs(Node* root) {
 
 - <102. Binary Tree Level Order Traversal>
 	
-	- Method2: DFS + preorder.
+	- Method1: DFS + preorder.
 		
 		```
 		void preorderDFS(TreeNode* root, vector<vector<int>>& ret, int level){
