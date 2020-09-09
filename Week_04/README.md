@@ -386,7 +386,20 @@ void bfs(Node* root) {
 	```
 ## 解题思路
 
-- <874. Walking Robot Simulation>: Easy. TODO. 
+- <874. Walking Robot Simulation>: Easy. 
+
+	- Method: 贪心算法(greedy algorithm). 始终记录当前位置是否是最大Distance。
+	- complexity:
+    	- time: O(N). 
+    	- space: O(N). One HashSet for obstacles. 
+	- Trick: to define the direction:
+		```
+        int dir(0);//North
+        int dirX[] = {0,1,0,-1};
+		int dirY[] = {1,0,-1,0};		
+        if(commands[i]==-1) { dir=(dir+1)%4; }
+        else if(commands[i]==-2) { dir=(dir+3)%4; }
+		```
 
 - <45. Jump Game II>: Hard. TODO. 
 
