@@ -53,6 +53,10 @@ refer to: https://www.cxyxiaowu.com/8990.html
 
 		7  0……0111； 
 		最左一位是符号位，其负数的表示在计算机中是用补码表示。 
+		
+		计算机存储数的时候存储的是补码，正数的补码是其本身，而负数的补码是其反码加1. 因此，00110110加一个负号以后就变成了10110110（姑且认为最高位是符号位）， 其反码为11001001，补码为11001010。这个跟原来的数按位与后就是00000010。 
+		（https://leetcode-cn.com/problems/n-queens-ii/solution/dfs-wei-yun-suan-jian-zhi-by-makeex/）
+		
 		补码等于反码加1。 
 		最后得到的结果就是0……0001。 
 		得到的数就是其最右非0位表示的数值，这里得到1。
@@ -522,12 +526,69 @@ refer to: https://www.cnblogs.com/onepixel/p/7674659.html
 		
 	- Method2: DFS + bits trick. 基于位运算的回溯. 关键就在于将棋盘二进制化，将有皇后的位置用1表示，空位用0表示。 https://xie.infoq.cn/article/51898e1fedea126a91a8b2604 
 	https://www.cxyxiaowu.com/8990.html
+	
+			vector<vector<string>> solveNQueens(int n) {
+				vector<vector<string>> res;
+				vector<string> solution(n, string(n,'.'));
+				dfs(res, solution, n, 0, 0, 0, 0);
+				return res;
+			}
+			void dfs(vector<vector<string>>& res, vector<string>& solution, int& n, int row, int col, int pie, int na) {
+				if(row>=n) { res.push_back(solution); return; }
+				
+				int bits = ~(col | pie | na) & ( (1<<n) - 1 ); // get all usable bits
+				while(bits>0) {
+					int pick = bits & -bits;//pick the lowest bit 1=usable col.
+					int c = getColIndex(pick, n);
+					solution[row][c] = 'Q';
+					dfs(res, solution, n, row+1, col|pick, (pie|pick)<<1, (na|pick)>>1);
+					solution[row][c] = '.';
+					bits = bits & (bits-1); // set the lowest bit 1 to 0.
+				}
+			}
+			int getColIndex(int pick, int n) {
+				while(pick>0) {
+					pick=pick>>1;
+					n--;
+				}
+				return n;
+			}
+			
+			
 	- complexity:
     	- time: O(N!). N是皇后数量. 
     	- space: O(N).空间复杂度主要取决于递归调用层数.
 
-- <52. N-Queens II> 
-    TODO N 皇后 II （亚马逊在半年内面试中考过）
+- <52. N-Queens II>, Hard, N 皇后 II （亚马逊在半年内面试中考过）
+	- Good Explain： https://leetcode-cn.com/problems/n-queens-ii/solution/dfs-wei-yun-suan-jian-zhi-by-makeex/	
+	- 核心思路是这样：
+	
+			使用常规深度优先一层层搜索
+			使用三个整形分别标记每一层哪些格子可以放置皇后，这三个整形分别代表列、左斜下、右斜下(col, pie, na), 
+			二进制位为1代表不能放置，0代表可以放置
+			核心两个位运算：
+				x & -x 代表除最后一位 1 保留，其它位全部为 0
+				x & (x - 1) 代表将最后一位 1 变成 0
+	- Method: DFS + bits trick.  
+	
+			int totalNQueens(int n) {
+				int res=0;
+				dfs(n, res, 0, 0, 0, 0);
+				return res;
+			}
+			void dfs(int n, int& res, int row, int col, int pie, int na) {
+				if(row==n) { res++; return; }
+				int bits = ~(col | pie | na) & ( (1<<n)-1 );
+				while(bits>0) {
+					int pick = bits & -bits;
+					dfs(n, res, row+1, col | pick, (pie|pick)<<1, (na|pick)>>1 );
+					bits = bits&(bits-1);
+				}
+			}
+			
+	- complexity:
+    	- time: O(N!). N是皇后数量. 
+    	- space: O(N).空间复杂度主要取决于递归调用层数.
 
 - <338. Counting Bits>, Medium, 
 	比特位计数（字节跳动、Facebook、MathWorks 在半年内面试中考过）
@@ -561,7 +622,7 @@ refer to: https://www.cnblogs.com/onepixel/p/7674659.html
 
 
 - <56. Merge Intervals>, Medium, 合并区间（Facebook、字节跳动、亚马逊在半年内面试中常考）
-	- Method: .
+	- Method: Sort.
 	- complexity:
 		- time: O(NLogN). NlogN for Sort function.
 		- space: O(N).
@@ -618,3 +679,4 @@ refer to: https://www.cnblogs.com/onepixel/p/7674659.html
 	- complexity:
 		- time: O(N). 
 		- space: O(1). 
+
