@@ -8,10 +8,13 @@
 class Solution {
 static bool compare (vector<int>& i,vector<int>& j) { return i[0]<j[0]; }
 public:
-    vector<vector<int>> merge(vector<vector<int>>& intervals) {        
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {       
         if(intervals.size()<2) return intervals;
         vector<vector<int>> res;
-        sort(intervals.begin(), intervals.end(), compare);
+        
+        //sort(intervals.begin(), intervals.end());//it works but slowly
+        sort(intervals.begin(), intervals.end(), compare);        
+        
         res.push_back(intervals[0]);
         for(int i=1; i<intervals.size(); ++i) {
             if(intervals[i][0]>res[res.size()-1][1]) {

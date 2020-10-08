@@ -274,6 +274,10 @@ refer to: https://www.cxyxiaowu.com/8990.html
 
 - 十大经典排序算法 https://www.cnblogs.com/onepixel/p/7674659.html 
 	
+- 9种经典排序算法可视化动画 https://www.bilibili.com/video/av25136272
+
+- 6分钟看完15种排序算法动画展示 https://www.bilibili.com/video/av63851336
+	
 - 快速排序
 	数组去标杆pivot，随机或者直接最右边元素。将小值放pivot左边，大值放pivot右边； 然后，左右递归快速排序；以达到整个数列有序。
 
@@ -522,8 +526,8 @@ refer to: https://www.cnblogs.com/onepixel/p/7674659.html
     	- time: O(N!). N是皇后数量. 
     	- space: O(N).空间复杂度主要取决于递归调用层数.
 
- 
-    N 皇后 II （亚马逊在半年内面试中考过）
+- <52. N-Queens II> 
+    TODO N 皇后 II （亚马逊在半年内面试中考过）
 
 - <338. Counting Bits>, Medium, 
 	比特位计数（字节跳动、Facebook、MathWorks 在半年内面试中考过）
@@ -543,31 +547,74 @@ refer to: https://www.cnblogs.com/onepixel/p/7674659.html
 		
 
 
-- <242. Valid Anagram> 有效的字母异位词（Facebook、亚马逊、谷歌在半年内面试中考过）
-	- Method: 计数排序法
-
-- <56. Merge Intervals>, Medium, 合并区间（Facebook、字节跳动、亚马逊在半年内面试中常考）
-
-
-- <1122. Relative Sort Array>, Easy    
-	- Method: using map.
+- <242. Valid Anagram>, Easy, 有效的字母异位词（Facebook、亚马逊、谷歌在半年内面试中考过）
+	- Method: counting sort.
 	- complexity:
 		- time: O(N).
-		- space: O(N).
+		- space: O(1).
+
+- <1122. Relative Sort Array>, Easy    
+	- Method: counting sort.
+	- complexity:
+		- time: O(1).
+		- space: O(1).
 
 
-- <56. Merge Intervals>, Medium
-    合并区间（Facebook、字节跳动、亚马逊在半年内面试中常考）
+- <56. Merge Intervals>, Medium, 合并区间（Facebook、字节跳动、亚马逊在半年内面试中常考）
 	- Method: .
 	- complexity:
 		- time: O(NLogN). NlogN for Sort function.
 		- space: O(N).
 
-
+- <493. Reverse Pairs>, Hard, 面试中经常出现逆序对问题！
+	- Method1: Merge-Sort. 
+			
+			int mergeSort2(vector<int>& nums, int L, int R) {
+				if(L>=R) return 0;
+				int mid = (L+R)>>1;
+				
+				int res = mergeSort2(nums, L, mid) + mergeSort2(nums, mid+1, R); 
+				res += merge(nums, L, mid, R);
+				
+				return res;
+			}
+			//merge + count
+			int merge(vector<int>& nums, int L, int mid, int R) {
+				vector<int> tmp(R-L+1, 0);        
+				int res=0, i=L, j=mid+1, t=0;  
+				
+				//here to count between left and right sides.
+				for(i=L, j=mid+1; i<=mid; ++i) {
+					while(j<=R && nums[i]/2.0>nums[j]) j++;
+					res += j-(mid+1);
+				}
+				
+				for(i=L, j=mid+1; i<=mid && j<=R;) tmp[t++] = nums[i]<nums[j] ? nums[i++] : nums[j++]; 
+				while(i<=mid) tmp[t++] = nums[i++];
+				while(j<=R) tmp[t++] = nums[j++];
+				for(i=L, t=0; i<=R;) nums[i++] = tmp[t++];
+				return res;
+			}	
+	
+		- time: O(NLogN). 
+		- space: O(N).
+	- Method2: TODO: 树状数组，利用二进制罗列下标。但面试中很少出现。	
+		- time: O(NLogN). 
+	
 ## 每日一题
 
 - <25. Reverse Nodes in k-Group>, Hard
 	- Method: 多个指针变换. 需要练习节点指针来回倒腾。 
+	- complexity:
+		- time: O(N). 
+		- space: O(1). 
+
+- <300. Longest Increasing Subsequence>, Medium, but hard to get the idea. [TODO +1]
+	- Method: 动态规划+二分查找. 
+	- 金句: 维护一个最长&上升&并且值最小的子序列sub。对原序列进行遍历，将每位元素二分插入 sub 中。如果 sub 中元素都比它小，将它插到最后; 否则，用它覆盖掉第一个不小于它的元素。
+	总之，思想就是让 sub 中存储比较小的元素。这样，sub 未必是真实的最长上升子序列，但长度是对的。
+	https://leetcode-cn.com/problems/longest-increasing-subsequence/solution/zui-chang-shang-sheng-zi-xu-lie-dong-tai-gui-hua-e/
+
 	- complexity:
 		- time: O(N). 
 		- space: O(1). 

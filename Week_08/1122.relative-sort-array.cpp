@@ -8,7 +8,8 @@
 class Solution {
 public:
     vector<int> relativeSortArray(vector<int>& arr1, vector<int>& arr2) {
-        map<int, int> a1;
+        int N=1001;
+        int a1[1001]={0}; 
         for(int i=0;i<arr1.size();++i) {
             a1[arr1[i]]++;
         }
@@ -17,15 +18,14 @@ public:
             for(int j=0; j<a1[arr2[i]]; ++j){
                 arr1[idx1++] = arr2[i];
             }
-            //a1.erase(arr2[i]);
             a1[arr2[i]]=0;
         }
-        for(auto a : a1) {
-            for(int j=0; j<a.second; ++j){
-                arr1[idx1++] = a.first;
+        for(int i=0; i<N; ++i) {
+            for(int j=0; j<a1[i]; ++j){
+                arr1[idx1++] = i;
             }
         }
-        return arr1;        
+        return arr1;           
     }
 };
 // @lc code=end
