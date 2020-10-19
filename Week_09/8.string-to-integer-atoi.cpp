@@ -9,7 +9,7 @@ class Solution {
 public:
     int myAtoi(string str) {
         int i = 0, sign = 1;     
-        long newInt = 0;      
+        long newInt = 0;
         while (str[i]==' ') i++;
         if (str[i]=='-') { sign = -1; i++; } 
         else if (str[i]=='+') i++;          
